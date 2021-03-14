@@ -1,0 +1,95 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "StringParameter": {
+            "type": "int",
+            "defaultValue":"new"
+            },
+        
+            "parameter1": {
+                "type": "bool",
+                "metadata": {
+                    "description": "description"
+                }
+            },
+            "parameter2":{
+                "type":"object",
+                "defaultValue": {
+                    "one":"a",
+                    "two":"b"
+                }
+            },
+            "Parameter3": {
+                "type": "array",
+                "defaultValue": [1,2,3],
+                "maxLength": "24",
+                "minLength": "3",
+                "maxValue":"100",
+                "minValue":"1"
+                },
+        "StorageAccountName": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "SAName"
+            }
+        },
+        "StorageLocation": {
+            "type": "string",
+            "defaultValue": "East US 2",
+            "allowedValues": [
+                "East Us 2",
+                "East Us"
+                ],
+            "metadata": {
+                "description": "Available locations"
+            }
+        },
+        "StorageAccountType": {
+            "type": "string",
+            "defaultValue": "Standard_LRS",
+            "allowedValues":[
+                "Standard_LRS",
+                "Standard_GRS",
+                "Standard_ZRS"
+            ],
+            "metadata": {
+                "description": "this is the thing"
+            }
+        },
+        "StorageAcctTier": {
+            "type": "string",
+            "defaultValue": "h"
+        }
+            },
+            
+    "functions": [],
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2015-05-01-preview",
+            "name": "[parameters('StorageAccountName')]",
+            "location": "[parameters('StorageLocation')]",
+            "dependsOn": ["resourceGroup(parameter1)"],
+            "tags": {
+                "tag1": "name",
+                "tag2": "Name2",
+                "tag3": "Name3"
+            },
+            "sku":{
+                "name": [
+                    "[parameters('StorageAccountType')]"
+                        ],
+                   "tier" : "[parameters('StorageAcctTier')]",
+                   "size":"Large",
+                   "family": "SkuFamily"    
+                    },
+                "kind":"StorageV2",
+                    "properties": {
+                    }
+                    }
+    ],
+    "outputs": {}
+}
